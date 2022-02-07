@@ -1,88 +1,161 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import {
+	Button,
+	CssBaseline,
+	TextField,
+	Grid,
+	Box,
+	Typography,
+	Container,
+	Paper,
+} from "@material-ui/core";
+import { Link, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 
-import Footer from "./components/Footer";
-
-const styles = makeStyles({
-	container: {},
-	heading: {
-		marginBottom: "150px",
-		width: "100%",
-		textAlign: "center",
-		paddingTop: "50px",
-	},
-	loginBox: {
-		borderRadius: "10px",
-		width: "600px",
-		padding: "40px",
-		margin: "auto",
-	},
-	createButton: {
-		margin: "10px 10px 10px 0px",
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center",
-	},
-	joinButton: {
-		margin: "10px 0px 10px 10px",
-		padding: "10px",
-		textAlign: "center",
-	},
-});
-
-function Login() {
-	const classes = styles();
-	const [name, setName] = useState("");
-	const [room_id, setRoomId] = useState("abc123");
+function Copyright() {
 	return (
-		<div className={`${classes.container}`}>
-			<div className={`${classes.heading}`}>
-				<h1>Welcome to ChatCord</h1>
-			</div>
-			<div className={`${classes.loginBox} border`}>
-				<div className={`row mb-3`}>
-					<label class="col-4 col-form-label">Enter Your Name</label>
-					<div class="col-8">
-						<input
-							type="text"
-							class="form-control"
-							value={name}
-							onChange={(event) => {
-								setName(event.target.value);
-								console.log(name);
-							}}
-						/>
-					</div>
-				</div>
-				<div className="row">
-					<Link to={`./room/${room_id}`} class="col">
-						<button
-							type="button"
-							className={`${classes.createButton} col border btn btn-primary`}
-						>
-							Create Room
-						</button>
-					</Link>
-
-					<Link
-						to={`./room/${room_id}`}
-						class="col"
-						onClick={(event) => (!name ? event.preventDefault : null)}
-					>
-						<button className={`${classes.joinButton} border btn btn-primary`}>
-							Join Room
-							{/* <div class="d-flex ">
-							<p>Enter Room ID</p>
-							<input type="text" class="form-control" />
-						</div> */}
-						</button>
-					</Link>
-				</div>
-			</div>
-			<Footer />
-		</div>
+		<Typography variant="body2" color="textSecondary" align="center">
+			{"Copyright © "}
+			{new Date().getFullYear()}
+			{"."}
+		</Typography>
 	);
 }
 
-export default Login;
+const useStyles = makeStyles((theme) => ({
+	paper: {
+		marginTop: theme.spacing(8),
+		display: "flex",
+		flexDirection: "column",
+		alignItems: "center",
+	},
+	avatar: {
+		margin: theme.spacing(1),
+		backgroundColor: theme.palette.secondary.main,
+	},
+	form: {
+		width: "100%", // Fix IE 11 issue.
+		marginTop: theme.spacing(1),
+	},
+	submit: {
+		margin: theme.spacing(3, 0, 2),
+	},
+	buttonContainer: {
+		padding: "20px",
+		height: "100%",
+		display: "flex",
+		flexDirection: "column",
+		justifyContent: "center",
+		alignItems: "center",
+		textAlign: "center",
+	},
+}));
+
+export default function Login() {
+	const classes = useStyles();
+	let navigate = useNavigate();
+	const [name, setName] = useState();
+	const [roomId, setRoomId] = useState("abc123");
+
+	const createRoom = (event) => {
+		event.preventDefault();
+		var room_id = "";
+		var characters =
+			"abcdefghijklmnopqrstuvwxyz0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+		for (var i = 0; i < 6; i++) {
+			room_id += characters.charAt(
+				Math.floor(Math.random() * characters.length)
+			);
+		}
+		return room_id;
+	};
+
+	const handleCreateRoom = (event) => {
+		if (name === "") return alert("Please Enter your name");
+		const room = createRoom(event);
+		let path = `room/?name=${name}&room=${room}`;
+		navigate(path);
+	};
+
+	return (
+		<div>
+			<Typography
+				component="h1"
+				variant="h2"
+				style={{ textAlign: "center", marginTop: "50px" }}
+			>
+				Welcome to Chatcord
+			</Typography>
+			<Container component="main" maxWidth="sm">
+				<CssBaseline />
+
+				<div className={classes.paper}>
+					<form className={classes.form} noValidate>
+						<TextField
+							variant="outlined"
+							margin="normal"
+							fullWidth
+							id="name"
+							label="Enter Your Name"
+							name="email"
+							autoFocus
+							onChange={(event) => {
+								setName(event.target.value);
+							}}
+							style={{ marginBottom: "30px" }}
+						/>
+						<Grid container spacing={3}>
+							<Grid item md={6} sm={12} xs={12}>
+								<Paper className={`${classes.buttonContainer}`}>
+									<Typography>Create room and invite your friends</Typography>
+									<Button
+										variant="contained"
+										color="primary"
+										className={classes.submit}
+										onClick={handleCreateRoom}
+									>
+										Create Room
+									</Button>
+								</Paper>
+							</Grid>
+							<Grid item md={6} sm={12} xs={12}>
+								<Paper className={`${classes.buttonContainer}`}>
+									<Typography>Join Existing Room</Typography>
+									<TextField
+										variant="outlined"
+										margin="normal"
+										fullWidth
+										id="room_id"
+										label="Enter Room ID"
+										name="Room ID"
+										autoFocus
+										onChange={(event) => {
+											setRoomId(event.target.value);
+										}}
+									/>
+									<Button
+										variant="contained"
+										color="primary"
+										component={Link}
+										to={`/room/?name=${name}&room=${roomId}`}
+										className={classes.submit}
+										onClick={() => {
+											if (name === "") {
+												alert("Please enter your name");
+											}
+										}}
+									>
+										Join Room
+									</Button>
+								</Paper>
+							</Grid>
+						</Grid>
+					</form>
+				</div>
+				<Box mt={8}>
+					<Copyright />
+				</Box>
+			</Container>
+		</div>
+	);
+}

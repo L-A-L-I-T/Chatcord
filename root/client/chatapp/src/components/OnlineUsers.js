@@ -5,11 +5,14 @@ import {
 	SwipeableDrawer,
 	Hidden,
 	List,
+	ListItem,
+	ListItemText,
+	ListItemIcon,
 	CssBaseline,
-	Avatar,
 	Typography,
 	Divider,
 } from "@material-ui/core";
+import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
 
 const drawerWidth = 250;
 
@@ -52,6 +55,10 @@ const useStyles = makeStyles((theme) => ({
 		flexGrow: 1,
 		padding: theme.spacing(3),
 	},
+	onlineIcon: {
+		fontSize: "15px",
+		color: theme.palette.common.green,
+	},
 }));
 
 export default function OnlineUsers(props) {
@@ -82,7 +89,29 @@ export default function OnlineUsers(props) {
 					>
 						<div>
 							<div className={classes.toolbar} />
-							Online Users
+							<Typography style={{ textAlign: "center", marginTop: "20px" }}>
+								Room ID : {props.room}
+							</Typography>
+							<Divider />
+							<Typography style={{ textAlign: "center" }}>
+								Online Users
+							</Typography>
+							<div>
+								<List>
+									{props.users.map((user, index) => {
+										return (
+											<ListItem>
+												<ListItemIcon>
+													<FiberManualRecordIcon
+														className={`${classes.onlineIcon}`}
+													/>
+												</ListItemIcon>
+												<ListItemText primary={`${user.name}`} />
+											</ListItem>
+										);
+									})}
+								</List>
+							</div>
 						</div>
 					</SwipeableDrawer>
 				</Hidden>
@@ -96,7 +125,29 @@ export default function OnlineUsers(props) {
 					>
 						<div>
 							<div className={classes.toolbar} />
-							Online Users
+							<Typography style={{ textAlign: "center", margin: "20px 0px" }}>
+								Room ID : {props.room}
+							</Typography>
+							<Divider />
+							<Typography style={{ textAlign: "center", marginTop: "20px" }}>
+								Online Users
+							</Typography>
+							<div>
+								<List>
+									{props.users.map((user, index) => {
+										return (
+											<ListItem>
+												<ListItemIcon>
+													<FiberManualRecordIcon
+														className={`${classes.onlineIcon}`}
+													/>
+												</ListItemIcon>
+												<ListItemText primary={`${user.name}`} />
+											</ListItem>
+										);
+									})}
+								</List>
+							</div>
 						</div>
 					</SwipeableDrawer>
 				</Hidden>

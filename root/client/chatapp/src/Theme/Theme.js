@@ -6,6 +6,7 @@ const col3 = "#F8F8FF";
 const col4 = "#FE5BD6";
 const col5 = "#f49d6e";
 const col6 = "#000000";
+const col7 = "#303030";
 
 export const lightTheme = createMuiTheme({
 	palette: {
@@ -13,6 +14,10 @@ export const lightTheme = createMuiTheme({
 		common: {
 			white: `${col3}`,
 			black: `${col6}`,
+			gray: `${col7}`,
+			purple: "#EE82EE",
+			magenta: "#FF00FF",
+			green: "#00CC33",
 		},
 		primary: {
 			main: `${col1}`,

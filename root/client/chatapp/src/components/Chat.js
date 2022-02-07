@@ -1,25 +1,23 @@
-import React, { useEffect, useState } from "react";
-import io from "socket.io-client";
-import { useParams } from "react-router";
+import React from "react";
+
 import { makeStyles } from "@material-ui/core/styles";
 
 import TextInput from "./TextInput";
+import Messages from "./Messages";
 
-const server = "localhost:8000";
+const useStyles = makeStyles({});
 
-const useStyles = makeStyles({
-	
-});
-
-function Chat() {
+function Chat(props) {
 	const classes = useStyles();
-	const { room_id } = useParams();
-	useEffect(() => {}, []);
 
 	return (
 		<div>
-			<div>Chat</div>
-			<TextInput />
+			<Messages messages={props.messages} name={props.name} />
+			<TextInput
+				message={props.message}
+				handleMessageChange={props.handleMessageChange}
+				sendMessage={props.sendMessage}
+			/>
 		</div>
 	);
 }

@@ -62,7 +62,14 @@ export default function Navbar(props) {
 						ChatCord
 					</Typography>
 				</Button>
-				<div className={classes.roomName}>Room Name</div>
+				<Button
+					className={classes.roomName}
+					onClick={props.leaveRoom}
+					component={Link}
+					to="/"
+				>
+					Leave Room
+				</Button>
 			</Toolbar>
 		</AppBar>
 	);

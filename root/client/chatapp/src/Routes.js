@@ -15,7 +15,7 @@ const AppRoutes = () => {
 			<BrowserRouter>
 				<Routes>
 					<Route path="/" exact strict element={<Login />}></Route>
-					<Route path="/room/:room_id" exact strict element={<Room />}></Route>
+					<Route path="/room" exact strict element={<Room />}></Route>
 				</Routes>
 			</BrowserRouter>
 		</CustomThemeContext>

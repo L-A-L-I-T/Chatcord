@@ -7,14 +7,13 @@ import { TextField, Button, Icon } from "@material-ui/core";
 const styles = makeStyles({
 	root: {
 		display: "flex",
-		
 	},
 	inputText: {
 		marginRight: "20px",
 	},
 });
 
-function TextInput() {
+function TextInput(props) {
 	const classes = styles();
 	return (
 		<div className={`${classes.root}`}>
@@ -24,13 +23,19 @@ function TextInput() {
 				variant="outlined"
 				size="small"
 				fullWidth
+				value={props.message}
 				className={`${classes.inputText}`}
+				onChange={props.handleMessageChange}
+				onKeyPress={(event) =>
+					event.key === "Enter" ? props.sendMessage : null
+				}
 			/>
 			<Button
 				variant="contained"
 				color="primary"
 				className={classes.button}
 				endIcon={<Icon>send</Icon>}
+				onClick={props.sendMessage}
 			>
 				Send
 			</Button>
