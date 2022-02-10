@@ -3,6 +3,8 @@ import io from "socket.io-client";
 import queryString from "query-string";
 import { useLocation } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
+import { Snackbar } from "@material-ui/core";
+import MuiAlert from "@material-ui/lab/Alert";
 import Navbar from "./components/Navbar";
 import OnlineUsers from "./components/OnlineUsers";
 import Chat from "./components/Chat";
@@ -20,6 +22,9 @@ const useStyles = makeStyles((theme) => ({
 		paddingRight: theme.spacing(8),
 	},
 }));
+function Alert(props) {
+	return <MuiAlert elevation={6} variant="filled" {...props} />;
+}
 
 let socket;
 const SERVER = "localhost:8000";
@@ -34,7 +39,7 @@ export default function Room() {
 		setMobileOpen(false);
 	};
 	const location = useLocation();
-
+	const [snackOpen, setSnackOpen] = useState(false);
 	const [name, setName] = useState("");
 	const [room, setRoom] = useState("");
 	const [message, setMessage] = useState("");
@@ -78,7 +83,7 @@ export default function Room() {
 	}, []);
 
 	const sendMessage = (event) => {
-		event.preventDefault();
+		event?.preventDefault();
 		if (message) {
 			socket.emit("sendMessage", message, () => setMessage(""));
 		}
@@ -89,8 +94,29 @@ export default function Room() {
 		socket.off();
 	};
 
+	const handleSnackOpen = () => {
+		setSnackOpen(true);
+	};
+
+	const handleSnackClose = (event, reason) => {
+		if (reason === "clickaway") {
+			return;
+		}
+		setSnackOpen(false);
+	};
+
 	return (
 		<div className={classes.root}>
+			<Snackbar
+				open={snackOpen}
+				autoHideDuration={2000}
+				onClose={handleSnackClose}
+				anchorOrigin={{ vertical: "top", horizontal: "center" }}
+			>
+				<Alert onClose={handleSnackClose} severity="success">
+					Room ID Copied!
+				</Alert>
+			</Snackbar>
 			<Navbar handleDrawerToggle={handleDrawerToggle} leaveRoom={leaveRoom} />
 			<OnlineUsers
 				handleDrawerToggle={handleDrawerToggle}
@@ -98,6 +124,7 @@ export default function Room() {
 				isOpen={mobileOpen}
 				users={users}
 				room={room}
+				handleSnackOpen={handleSnackOpen}
 			/>
 			<main className={classes.content}>
 				<div className={classes.toolbar} />
@@ -108,6 +135,7 @@ export default function Room() {
 						name={name}
 						handleMessageChange={handleMessageChange}
 						sendMessage={sendMessage}
+						setMessage={setMessage}
 					/>
 				</div>
 			</main>

@@ -11,26 +11,16 @@ import {
 	CssBaseline,
 	Typography,
 	Divider,
+	IconButton,
 } from "@material-ui/core";
 import FiberManualRecordIcon from "@material-ui/icons/FiberManualRecord";
+import FilterNoneIcon from "@material-ui/icons/FilterNone";
 
 const drawerWidth = 250;
 
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: "flex",
-	},
-	avatarDiv: {
-		display: "flex",
-		justifyContent: "center",
-		"& > *": {
-			margin: theme.spacing(3),
-		},
-	},
-	avatar: {
-		width: theme.spacing(8),
-		height: theme.spacing(8),
-		backgroundColor: theme.palette.primary.main,
 	},
 	drawer: {
 		[theme.breakpoints.up("sm")]: {
@@ -59,12 +49,23 @@ const useStyles = makeStyles((theme) => ({
 		fontSize: "15px",
 		color: theme.palette.common.green,
 	},
+	roomIdContainer: {
+		display: "flex",
+		justifyContent: "space-around",
+		alignItems: "center",
+		margin: "10px 0px",
+	},
 }));
 
 export default function OnlineUsers(props) {
 	const { window } = props;
 	const classes = useStyles();
 	const theme = useTheme();
+
+	const handleCopy = () => {
+		props.handleSnackOpen();
+		navigator.clipboard.writeText(props.room);
+	};
 
 	const container =
 		window !== undefined ? () => window().document.body : undefined;
@@ -89,11 +90,14 @@ export default function OnlineUsers(props) {
 					>
 						<div>
 							<div className={classes.toolbar} />
-							<Typography style={{ textAlign: "center", marginTop: "20px" }}>
-								Room ID : {props.room}
-							</Typography>
+							<div className={`${classes.roomIdContainer}`}>
+								<Typography>Room ID : {props.room}</Typography>
+								<IconButton onClick={handleCopy}>
+									<FilterNoneIcon />
+								</IconButton>
+							</div>
 							<Divider />
-							<Typography style={{ textAlign: "center" }}>
+							<Typography style={{ textAlign: "center", marginTop: "20px" }}>
 								Online Users
 							</Typography>
 							<div>
@@ -101,7 +105,7 @@ export default function OnlineUsers(props) {
 									{props.users.map((user, index) => {
 										return (
 											<ListItem>
-												<ListItemIcon>
+												<ListItemIcon style={{ marginRight: "-20px" }}>
 													<FiberManualRecordIcon
 														className={`${classes.onlineIcon}`}
 													/>
@@ -125,9 +129,13 @@ export default function OnlineUsers(props) {
 					>
 						<div>
 							<div className={classes.toolbar} />
-							<Typography style={{ textAlign: "center", margin: "20px 0px" }}>
-								Room ID : {props.room}
-							</Typography>
+							<div className={`${classes.roomIdContainer}`}>
+								<Typography>Room ID : {props.room}</Typography>
+								<IconButton onClick={handleCopy}>
+									<FilterNoneIcon />
+								</IconButton>
+							</div>
+
 							<Divider />
 							<Typography style={{ textAlign: "center", marginTop: "20px" }}>
 								Online Users
@@ -137,7 +145,7 @@ export default function OnlineUsers(props) {
 									{props.users.map((user, index) => {
 										return (
 											<ListItem>
-												<ListItemIcon>
+												<ListItemIcon style={{ marginRight: "-20px" }}>
 													<FiberManualRecordIcon
 														className={`${classes.onlineIcon}`}
 													/>

@@ -54,8 +54,8 @@ const useStyles = makeStyles((theme) => ({
 export default function Login() {
 	const classes = useStyles();
 	let navigate = useNavigate();
-	const [name, setName] = useState();
-	const [roomId, setRoomId] = useState("abc123");
+	const [name, setName] = useState("");
+	const [room, setRoom] = useState("");
 
 	const createRoom = (event) => {
 		event.preventDefault();
@@ -71,10 +71,31 @@ export default function Login() {
 	};
 
 	const handleCreateRoom = (event) => {
-		if (name === "") return alert("Please Enter your name");
-		const room = createRoom(event);
-		let path = `room/?name=${name}&room=${room}`;
-		navigate(path);
+		if (!name) {
+			event.preventDefault();
+			alert("Please Enter Your Name");
+		} else {
+			const room = createRoom(event);
+			let path = `room/?name=${name}&room=${room}`;
+			navigate(path);
+		}
+	};
+
+	const handleJoinRoom = (event) => {
+		if (!name) {
+			event.preventDefault();
+			alert("Please Enter Your Name");
+		} else if (!room) {
+			event.preventDefault();
+			alert("Please Enter Room ID");
+		} else if (room.length !== 6) {
+			event.preventDefault();
+			setRoom("");
+			alert("PLease Enter Valid Room ID");
+		} else {
+			let path = `room/?name=${name}&room=${room}`;
+			navigate(path);
+		}
 	};
 
 	return (
@@ -95,10 +116,11 @@ export default function Login() {
 							variant="outlined"
 							margin="normal"
 							fullWidth
-							id="name"
-							label="Enter Your Name"
-							name="email"
 							autoFocus
+							id="name"
+							value={name}
+							label="Enter Your Name"
+							name="name"
 							onChange={(event) => {
 								setName(event.target.value);
 							}}
@@ -126,24 +148,20 @@ export default function Login() {
 										margin="normal"
 										fullWidth
 										id="room_id"
+										value={room}
 										label="Enter Room ID"
 										name="Room ID"
-										autoFocus
 										onChange={(event) => {
-											setRoomId(event.target.value);
+											setRoom(event.target.value);
 										}}
 									/>
 									<Button
 										variant="contained"
 										color="primary"
 										component={Link}
-										to={`/room/?name=${name}&room=${roomId}`}
+										to={`/room/?name=${name}&room=${room}`}
 										className={classes.submit}
-										onClick={() => {
-											if (name === "") {
-												alert("Please enter your name");
-											}
-										}}
+										onClick={handleJoinRoom}
 									>
 										Join Room
 									</Button>

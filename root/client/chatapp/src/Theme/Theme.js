@@ -6,7 +6,7 @@ const col3 = "#F8F8FF";
 const col4 = "#FE5BD6";
 const col5 = "#f49d6e";
 const col6 = "#000000";
-const col7 = "#303030";
+const col7 = "#A0A0A0";
 
 export const lightTheme = createMuiTheme({
 	palette: {

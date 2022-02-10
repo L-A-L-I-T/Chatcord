@@ -1,6 +1,7 @@
 import React from "react";
 
 import Message from "./Message";
+import { makeStyles } from "@material-ui/core/styles";
 
 function Messages(props) {
 	return (

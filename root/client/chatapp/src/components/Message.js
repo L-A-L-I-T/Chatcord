@@ -3,9 +3,28 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Typography } from "@material-ui/core";
 const styles = makeStyles((theme) => ({
 	container: {
-		borderRadius: "10px",
+		margin: "20px 0px ",
+	},
+	messageBox: {
+		padding: "10px",
+	},
+	ownMessage: {
 		background: `linear-gradient(to right,${theme.palette.common.magenta} , ${theme.palette.common.purple})`,
-		width: "100%",
+		borderRadius: "10px 10px 0px 10px",
+		marginLeft: "auto",
+		maxWidth: "60%",
+		overflowWrap: "break-word",
+	},
+	diffUserMessage: {
+		background: `linear-gradient(to right,${theme.palette.common.magenta} , ${theme.palette.common.purple})`,
+		borderRadius: "10px 10px 10px 0px",
+		maxWidth: "60%",
+	},
+	botMessage: {
+		background: `${theme.palette.common.gray}`,
+		borderRadius: "10px",
+		width: "50%",
+		margin: "auto",
 	},
 }));
 
@@ -14,18 +33,19 @@ function Message({ message, name }) {
 	return (
 		<div className={`${classes.container}`}>
 			{message.user === name ? (
-				<div style={{ float: "right" }}>
-					<div>
-						{message.user}
-						{message.text}
-					</div>
+				<div className={`${classes.ownMessage} ${classes.messageBox}`}>
+					<Typography>{message.user}</Typography>
+					<Typography>{message.text}</Typography>
+				</div>
+			) : message.user === "Bot" ? (
+				<div className={`${classes.botMessage} ${classes.messageBox}`}>
+					<Typography>{message.user}</Typography>
+					<Typography>{message.text}</Typography>
 				</div>
 			) : (
-				<div style={{ float: "left" }}>
-					<div>
-						<Typography>{message.user}</Typography>
-						<Typography>{message.text}</Typography>
-					</div>
+				<div className={`${classes.diffUserMessage} ${classes.messageBox}`}>
+					<Typography>{message.user}</Typography>
+					<Typography>{message.text}</Typography>
 				</div>
 			)}
 		</div>
