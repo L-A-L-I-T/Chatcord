@@ -3,7 +3,7 @@ const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
 require("dotenv").config();
-const PORT = Process.env.PORT || 8000;
+const PORT = process.env.PORT || 8000;
 
 const { addUser, removeUser, getUsersInRoom, getUser } = require("./users.js");
 
