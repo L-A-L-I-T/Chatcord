@@ -2,6 +2,7 @@ const express = require("express");
 const socketio = require("socket.io");
 const http = require("http");
 const cors = require("cors");
+require("dotenv").config();
 const PORT = process.env.PORT || 8000;
 
 const { addUser, removeUser, getUsersInRoom, getUser } = require("./users.js");
@@ -47,7 +48,7 @@ io.on("connect", (socket) => {
 	socket.on("sendMessage", (message, callback) => {
 		const user = getUser(socket.id);
 		io.to(user.room).emit("message", { user: user.name, text: message });
-
+		console.log(message);
 		callback();
 	});
 	socket.on("disconnect", () => {

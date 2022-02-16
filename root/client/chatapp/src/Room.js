@@ -42,6 +42,7 @@ export default function Room() {
 	const [snackOpen, setSnackOpen] = useState(false);
 	const [name, setName] = useState("");
 	const [room, setRoom] = useState("");
+	const [files, setFiles] = useState([]);
 	const [message, setMessage] = useState("");
 	const [messages, setMessages] = useState([]);
 	const [users, setUsers] = useState([]);
@@ -49,7 +50,12 @@ export default function Room() {
 		setMessage(event.target.value);
 	};
 
-	console.log(message, messages, users);
+	const handleFileChange = (event) => {
+		console.log(files);
+		setFiles((files) => [...files, event.target.files[0]]);
+	};
+
+	console.log(message, messages, users, files);
 
 	useEffect(() => {
 		const { name, room } = queryString.parse(location.search);
@@ -86,6 +92,20 @@ export default function Room() {
 		event?.preventDefault();
 		if (message) {
 			socket.emit("sendMessage", message, () => setMessage(""));
+		}
+		if (files.length > 0) {
+			files.map((file, index) => {
+				return socket.emit(
+					"sendMessage",
+					{
+						type: "file",
+						body: file,
+						mimeType: file.type,
+						fileName: file.name,
+					},
+					() => setFiles([])
+				);
+			});
 		}
 	};
 
@@ -136,6 +156,9 @@ export default function Room() {
 						handleMessageChange={handleMessageChange}
 						sendMessage={sendMessage}
 						setMessage={setMessage}
+						files={files}
+						setFiles={setFiles}
+						handleFileChange={handleFileChange}
 					/>
 				</div>
 			</main>

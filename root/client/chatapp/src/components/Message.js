@@ -1,6 +1,11 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import { Typography } from "@material-ui/core";
+import { Typography, IconButton } from "@material-ui/core";
+
+import VerticalAlignBottomIcon from "@material-ui/icons/VerticalAlignBottom";
+
+import File from "./File";
+
 const styles = makeStyles((theme) => ({
 	container: {
 		margin: "20px 0px ",
@@ -28,14 +33,25 @@ const styles = makeStyles((theme) => ({
 	},
 }));
 
+let blob;
+
 function Message({ message, name }) {
+	if (message.text.type === "file") {
+		blob = new Blob([message.text.body], { type: message.text.mimeType });
+		console.log(blob);
+	}
+
 	const classes = styles();
 	return (
 		<div className={`${classes.container}`}>
 			{message.user === name ? (
 				<div className={`${classes.ownMessage} ${classes.messageBox}`}>
 					<Typography>{message.user}</Typography>
-					<Typography>{message.text}</Typography>
+					{message.text?.type === "file" ? (
+						<File blob={blob} message={message} />
+					) : (
+						<Typography>{message.text}</Typography>
+					)}
 				</div>
 			) : message.user === "Bot" ? (
 				<div className={`${classes.botMessage} ${classes.messageBox}`}>
@@ -45,7 +61,11 @@ function Message({ message, name }) {
 			) : (
 				<div className={`${classes.diffUserMessage} ${classes.messageBox}`}>
 					<Typography>{message.user}</Typography>
-					<Typography>{message.text}</Typography>
+					{message.text.type === "file" ? (
+						<File blob={blob} message={message} />
+					) : (
+						<Typography>{message.text}</Typography>
+					)}
 				</div>
 			)}
 		</div>

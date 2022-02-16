@@ -37,6 +37,9 @@ function Chat(props) {
 					handleMessageChange={props.handleMessageChange}
 					sendMessage={props.sendMessage}
 					setMessage={props.setMessage}
+					files={props.files}
+					setFiles={props.setFiles}
+					handleFileChange={props.handleFileChange}
 				/>
 			</div>
 		</div>
