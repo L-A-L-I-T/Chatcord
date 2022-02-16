@@ -13,6 +13,7 @@ const router = require("./router");
 
 app.use(cors());
 app.use(router);
+app.get("/", (req, res) => res.send("Hello World"));
 const server = http.createServer(app);
 const io = socketio(server);
 
