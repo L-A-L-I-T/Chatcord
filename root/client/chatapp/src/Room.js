@@ -8,6 +8,9 @@ import MuiAlert from "@material-ui/lab/Alert";
 import Navbar from "./components/Navbar";
 import OnlineUsers from "./components/OnlineUsers";
 import Chat from "./components/Chat";
+
+const SERVER = process.env.REACT_APP_SERVER;
+
 const useStyles = makeStyles((theme) => ({
 	root: {
 		display: "flex",
@@ -27,8 +30,6 @@ function Alert(props) {
 }
 
 let socket;
-const SERVER = "localhost:8000";
-
 export default function Room() {
 	const classes = useStyles();
 	const [mobileOpen, setMobileOpen] = useState(false);
