@@ -8,7 +8,7 @@ const addUser = ({ id, name, room }) => {
 	);
 
 	if (alreadyExists) {
-		return { error: "Username is taken!" };
+		return { error: "Username is taken! Try another" };
 	}
 	const user = { id, name, room };
 

@@ -37,6 +37,7 @@ const useStyles = makeStyles((theme) => ({
 	toolbar: theme.mixins.toolbar,
 	drawerPaper: {
 		width: drawerWidth,
+		background: theme.palette.common.sidebar,
 	},
 	drawerContainer: {
 		overflow: "auto",
@@ -47,13 +48,17 @@ const useStyles = makeStyles((theme) => ({
 	},
 	onlineIcon: {
 		fontSize: "15px",
-		color: theme.palette.common.green,
+		color: theme.palette.common.online,
 	},
 	roomIdContainer: {
 		display: "flex",
 		justifyContent: "space-around",
 		alignItems: "center",
 		margin: "10px 0px",
+	},
+	onlineUsers: {
+		overflowY: "scroll",
+		height: "75vh",
 	},
 }));
 
@@ -100,11 +105,11 @@ export default function OnlineUsers(props) {
 							<Typography style={{ textAlign: "center", marginTop: "20px" }}>
 								Online Users
 							</Typography>
-							<div>
+							<div className={`${classes.onlineUsers}`}>
 								<List>
 									{props.users.map((user, index) => {
 										return (
-											<ListItem>
+											<ListItem key={index}>
 												<ListItemIcon style={{ marginRight: "-20px" }}>
 													<FiberManualRecordIcon
 														className={`${classes.onlineIcon}`}
@@ -126,6 +131,8 @@ export default function OnlineUsers(props) {
 						}}
 						variant="permanent"
 						open
+						onOpen={props.handleDrawerToggle}
+						onClose={props.handleDrawerToggle}
 					>
 						<div>
 							<div className={classes.toolbar} />
@@ -140,11 +147,11 @@ export default function OnlineUsers(props) {
 							<Typography style={{ textAlign: "center", marginTop: "20px" }}>
 								Online Users
 							</Typography>
-							<div>
+							<div className={`${classes.onlineUsers}`}>
 								<List>
 									{props.users.map((user, index) => {
 										return (
-											<ListItem>
+											<ListItem key={index}>
 												<ListItemIcon style={{ marginRight: "-20px" }}>
 													<FiberManualRecordIcon
 														className={`${classes.onlineIcon}`}

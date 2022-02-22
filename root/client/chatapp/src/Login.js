@@ -4,41 +4,29 @@ import {
 	CssBaseline,
 	TextField,
 	Grid,
-	Box,
 	Typography,
 	Container,
 	Paper,
 } from "@material-ui/core";
 import { Link, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
-
-function Copyright() {
-	return (
-		<Typography variant="body2" color="textSecondary" align="center">
-			{"Copyright © "}
-			{new Date().getFullYear()}
-			{"."}
-		</Typography>
-	);
-}
+import Footer from "./components/Footer";
 
 const useStyles = makeStyles((theme) => ({
+	welcomeTxt: {
+		textAlign: "center",
+		marginTop: "50px",
+	},
 	paper: {
-		marginTop: theme.spacing(8),
+		marginTop: "100px",
+		marginBottom: "200px",
 		display: "flex",
 		flexDirection: "column",
 		alignItems: "center",
 	},
-	avatar: {
-		margin: theme.spacing(1),
-		backgroundColor: theme.palette.secondary.main,
-	},
-	form: {
-		width: "100%", // Fix IE 11 issue.
-		marginTop: theme.spacing(1),
-	},
 	submit: {
 		margin: theme.spacing(3, 0, 2),
+		fontWeight: "600",
 	},
 	buttonContainer: {
 		padding: "20px",
@@ -99,11 +87,11 @@ export default function Login() {
 	};
 
 	return (
-		<div>
+		<div style={{ position: "relative" }}>
 			<Typography
-				component="h1"
+				className={`${classes.welcomeTxt}`}
 				variant="h2"
-				style={{ textAlign: "center", marginTop: "50px" }}
+				component="h2"
 			>
 				Welcome to Chatcord
 			</Typography>
@@ -111,7 +99,7 @@ export default function Login() {
 				<CssBaseline />
 
 				<div className={classes.paper}>
-					<form className={classes.form} noValidate>
+					<form className={classes.form}>
 						<TextField
 							variant="outlined"
 							margin="normal"
@@ -170,10 +158,8 @@ export default function Login() {
 						</Grid>
 					</form>
 				</div>
-				<Box mt={8}>
-					<Copyright />
-				</Box>
 			</Container>
+			<Footer />
 		</div>
 	);
 }

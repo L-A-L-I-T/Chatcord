@@ -9,11 +9,13 @@ import {
 } from "@material-ui/core";
 
 import { makeStyles } from "@material-ui/styles";
+import { useThemeUpdate } from "../Theme/CustomThemeContext";
 
 import MenuIcon from "@material-ui/icons/Menu";
+import Brightness4Icon from "@material-ui/icons/Brightness4";
 const useStyles = makeStyles((theme) => ({
 	appBar: {
-		background: `linear-gradient(to right,${theme.palette.primary.main} , ${theme.palette.primary.light})`,
+		background: theme.palette.primary.main,
 		zIndex: theme.zIndex.modal + 1,
 		boxShadow: "none",
 	},
@@ -40,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Navbar(props) {
 	const classes = useStyles();
+	const toggleTheme = useThemeUpdate();
 	return (
 		<AppBar className={classes.appBar}>
 			<Toolbar>
@@ -62,12 +65,13 @@ export default function Navbar(props) {
 						ChatCord
 					</Typography>
 				</Button>
-				<Button
-					className={classes.roomName}
-					onClick={props.leaveRoom}
-					component={Link}
-					to="/"
+				<IconButton
+					style={{ marginLeft: "auto", marginRight: "10px" }}
+					onClick={toggleTheme}
 				>
+					<Brightness4Icon />
+				</IconButton>
+				<Button onClick={props.leaveRoom} component={Link} to="/">
 					Leave Room
 				</Button>
 			</Toolbar>

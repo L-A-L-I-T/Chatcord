@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import io from "socket.io-client";
 import queryString from "query-string";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { makeStyles } from "@material-ui/core/styles";
 import { Snackbar } from "@material-ui/core";
 import MuiAlert from "@material-ui/lab/Alert";
@@ -23,6 +23,7 @@ const useStyles = makeStyles((theme) => ({
 		padding: theme.spacing(4),
 		paddingLeft: theme.spacing(8),
 		paddingRight: theme.spacing(8),
+		background: theme.palette.common.chatBackground,
 	},
 }));
 function Alert(props) {
@@ -31,6 +32,7 @@ function Alert(props) {
 
 let socket;
 export default function Room() {
+	let navigate = useNavigate();
 	const classes = useStyles();
 	const [mobileOpen, setMobileOpen] = useState(false);
 	const handleDrawerToggle = () => {
@@ -52,11 +54,8 @@ export default function Room() {
 	};
 
 	const handleFileChange = (event) => {
-		console.log(files);
 		setFiles((files) => [...files, event.target.files[0]]);
 	};
-
-	console.log(message, messages, users, files);
 
 	useEffect(() => {
 		const { name, room } = queryString.parse(location.search);
@@ -70,6 +69,8 @@ export default function Room() {
 
 		socket.emit("join", { name, room }, (error) => {
 			if (error) {
+				let path = `/`;
+				navigate(path);
 				alert(error);
 			}
 		});
@@ -92,7 +93,9 @@ export default function Room() {
 	const sendMessage = (event) => {
 		event?.preventDefault();
 		if (message) {
-			socket.emit("sendMessage", message, () => setMessage(""));
+			socket.emit("sendMessage", { type: "msg", msg: message }, () =>
+				setMessage("")
+			);
 		}
 		if (files.length > 0) {
 			files.map((file, index) => {

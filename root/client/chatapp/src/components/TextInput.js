@@ -5,14 +5,10 @@ import "emoji-mart/css/emoji-mart.css";
 import {
 	TextField,
 	Grid,
-	Button,
-	Icon,
 	IconButton,
 	Popper,
-	Slide,
 	Dialog,
 	DialogTitle,
-	Typography,
 	Badge,
 	Toolbar,
 	AppBar,
@@ -35,12 +31,12 @@ const styles = makeStyles((theme) => ({
 		display: "flex",
 		alignItems: "center",
 		justifyContent: "center",
-		background: "#F0F0F0",
+		background: `${theme.palette.common.textInputBackground}`,
 		borderRadius: "10px",
 	},
 	inputText: {
 		marginRight: "5px",
-		background: "#DCDCDC",
+		background: theme.palette.common.textInput,
 		borderRadius: "10px",
 	},
 	noBorder: {
@@ -71,7 +67,6 @@ function TextInput(props) {
 
 	const handleKeyPress = (event) => {
 		if (event.key === "Enter") {
-			console.log("key Pressed");
 			props.sendMessage();
 		}
 	};
@@ -100,6 +95,7 @@ function TextInput(props) {
 	};
 	const fullScreen = useMediaQuery(theme.breakpoints.down("sm"));
 	const classes = styles();
+
 	return (
 		<div className={`${classes.root}`}>
 			<Dialog

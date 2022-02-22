@@ -28,12 +28,12 @@ function File(props) {
 
 	return (
 		<div>
-			<a href={filesrc} download={`${props.message.text.fileName}`}>
+			<a href={filesrc} download={`${props.message.data.fileName}`}>
 				<IconButton className={classes.downloadButton}>
-					<VerticalAlignBottomIcon style={{ fontSize: "25px" }} />
+					<VerticalAlignBottomIcon style={{ fontSize: "15px" }} />
 				</IconButton>
 			</a>
-			{props.message.text.fileName}
+			{props.message.data.fileName}
 			{/* <img src={filesrc} style={{ width: "150px", height: "auto" }} /> */}
 		</div>
 	);
