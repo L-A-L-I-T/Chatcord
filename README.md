@@ -20,19 +20,19 @@ A Web Application for chatting in private rooms with emoji and file sharing opti
 
 Create or Join Rooms
 
-![](./demo/Create_or_Join_Room.gif)
+![](./Demo/Create_or_Join_Room.gif)
 
 Emoji Sharing
 
-![](./demo/Emoji.gif)
+![](./Demo/Emoji.gif)
 
 File Sharing
 
-![](./demo/File_Sharing.gif)
+![](./Demo/File_Sharing.gif)
 
 Responsiveness and Dark Mode
 
-![](./demo/Dark_Mode.gif)
+![](./Demo/Dark_Mode.gif)
 
 ## Instructions
 
