@@ -4,7 +4,7 @@ const http = require("http");
 const cors = require("cors");
 const moment = require("moment");
 require("dotenv").config();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 3000;
 
 const { addUser, removeUser, getUsersInRoom, getUser } = require("./users.js");
 
